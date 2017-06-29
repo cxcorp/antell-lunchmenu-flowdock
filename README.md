@@ -3,6 +3,28 @@ Antell lunchmenu integration for Flowdock.
 
 ![Screenshot](https://user-images.githubusercontent.com/21111572/27684153-5fb11bbc-5cd1-11e7-9c69-459d5ddcdf8f.png)
 
+## Command line arguments
+This script makes use of command line arguments to configure the behavior.
+
+```
+Options:
+  -u, --url   url of the lunch list                          [string] [required]
+  -f, --flow  flow source token of the target flow           [string] [required]
+  -t, --tags  tags of the message sent                                   [array]
+  --help      Show help                                                [boolean]
+```
+
+Example:
+
+```
+npm run lunchmenu -- \
+-f 1234567895154e309bf72f5123456789 \
+-u http://www.antell.fi/lounaslistat/lounaslista.html?owner=112 \
+-t #lunch_menu #antell
+```
+
+Note: when running via `npm run`, the `--` after the script name (lunchmenu) is required so that `npm` realizes that you're not trying to pass the args to *it*.
+
 ## Setting up the integration
 Setting up this integration requires:
 
@@ -33,28 +55,6 @@ This integration only runs during scheduled intervals for a few seconds, meaning
 4. Set up the Heroku scheduler
    - Go to the **Resources** tab and enable the "Heroku Scheduler" add-on. Schedule the following command: `npm run lunchmenu -- <args>` where <args> are the arguments as seen below in *Command line arguments*
 5. Done!
-
-## Command line arguments
-This script makes use of command line arguments to configure the behavior.
-
-```
-Options:
-  -u, --url   url of the lunch list                          [string] [required]
-  -f, --flow  flow source token of the target flow           [string] [required]
-  -t, --tags  tags of the message sent                                   [array]
-  --help      Show help                                                [boolean]
-```
-
-Example:
-
-```
-npm run lunchmenu -- \
--f 1234567895154e309bf72f5123456789 \
--u http://www.antell.fi/lounaslistat/lounaslista.html?owner=112 \
--t #lunch_menu #antell
-```
-
-Note: when running via `npm run`, the `--` after the script name (lunchmenu) is required so that `npm` realizes that you're not trying to pass the args to *it*.
 
 ## License
 antell-lunchmenu-flowdock is licensed under the MIT license. See LICENSE.
