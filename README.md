@@ -42,5 +42,12 @@ This script makes use of environmental variables to configure the flowdock sourc
 | `ANTELL_MENU_URL` | The address of the lunch menu, e.g. http://www.antell.fi/lounaslistat/lounaslista.html?owner=112 |
 | `FLOWDOCK_FLOW_TOKENS` | Comma separated array of the tokens of the flows to which you want lunch menus sent |
 
+### Example `.env`
+
+```sh
+ANTELL_MENU_URL=http://www.antell.fi/lounaslistat/lounaslista.html?owner=112
+FLOWDOCK_FLOW_TOKENS=dd03287fa5154e309bf72f57390d5d2a,f4888feac07b44398f5f4a06b85a6477
+```
+
 ## License
 antell-lunchmenu-flowdock is licensed under the MIT license. See LICENSE.
