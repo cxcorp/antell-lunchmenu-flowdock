@@ -20,7 +20,8 @@ function submitToFlowdock(menu) {
       title: getThreadTitle(),
       fields: fields,
       external_url: antellMenuUrl
-    }
+    },
+    tags: ['#lunch_menu']
   }
   const headers = {
     'Content-Type': 'application/json',
