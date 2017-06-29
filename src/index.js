@@ -1,9 +1,9 @@
 require('dotenv').config()
 const fetch = require('node-fetch')
-const { antellMenuUrl, flowdockFlowToken, userAgent } = require('./config')
+const { antellMenuUrl, flowdockFlowTokens, userAgent } = require('./config')
 const { getTodaysWeekdayInFinnish } = require('./util')
 const { parseLunchMenu } = require('./lunch-menu-parser')
-const { submitToFlowdock } = require('./flowdock-submitter')
+const { submitMenuToFlowdock } = require('./flowdock-submitter')
 
 exitIfMissingVars()
 
@@ -19,14 +19,14 @@ getLunchMenu().then(weekMenu => {
     process.exit(1)
   }
 
-  return submitToFlowdock(menu)
+  return submitMenuToFlowdock(menu)
 })
 
 function exitIfMissingVars() {
   let exit = false
-  if (!flowdockFlowToken) {
+  if (flowdockFlowTokens.length < 1) {
     exit = true
-    console.error('FLOWDOCK_TOKEN is not set!')
+    console.error('FLOWDOCK_FLOW_TOKENS are not set!')
   }
   if (!antellMenuUrl) {
     exit = true

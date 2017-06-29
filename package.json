@@ -1,6 +1,6 @@
 {
   "name": "antell-localhost-flowdock",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Flowdock integration for the Antell lunch menu",
   "main": "src/index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "bluebird": "3.5.0",
     "dotenv": "4.0.0",
     "jsdom": "11.0.0",
     "node-fetch": "1.7.1"

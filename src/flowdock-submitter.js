@@ -1,16 +1,17 @@
+const Promise = require('bluebird')
 const fetch = require('node-fetch')
-const { userAgent, flowdockFlowToken, antellMenuUrl } = require('./config')
+const { userAgent, flowdockFlowTokens, antellMenuUrl } = require('./config')
 const { getTodaysWeekdayInEnglish, formatDateRfc } = require('./util')
 
 /**
  * @param {any} menu
  * @returns {Promise<string>} flowdock server response
  */
-function submitToFlowdock(menu) {
+function submitMenuToFlowdock(menu) {
   const fields = menuToFields(menu)
   const body = getMessageBody(fields)
   const payload = {
-    flow_token: flowdockFlowToken,
+    //flow_token: flowdockFlowTokens, // injected below
     event: 'activity',
     title: `Today's lunch`,
     body,
@@ -23,6 +24,19 @@ function submitToFlowdock(menu) {
     },
     tags: ['#lunch_menu']
   }
+
+  return Promise.all(flowdockFlowTokens.map((token, i) => {
+    const payloadWithToken = Object.assign(
+      {},
+      payload,
+      { flow_token: token }
+    )
+    console.log(`Submitting lunch list to flow #${i}`)
+    return submitBodyToFlow(payloadWithToken)
+  }))
+}
+
+function submitBodyToFlow(payload) {
   const headers = {
     'Content-Type': 'application/json',
     'User-Agent': userAgent
@@ -61,4 +75,4 @@ function getThreadTitle() {
   return `${getTodaysWeekdayInEnglish()}'s lunch menu (${formatDateRfc(new Date())})`
 }
 
-module.exports = { submitToFlowdock }
+module.exports = { submitMenuToFlowdock }
