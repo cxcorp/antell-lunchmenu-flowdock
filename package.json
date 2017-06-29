@@ -1,7 +1,7 @@
 {
   "name": "antell-localhost-flowdock",
-  "version": "0.0.1",
-  "description": "Flowdock integration for the Antell Neptun lunch menu",
+  "version": "1.0.3",
+  "description": "Flowdock integration for the Antell lunch menu",
   "main": "index.js",
   "scripts": {
     "lunchmenu": "node index.js",
