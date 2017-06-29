@@ -1,6 +1,8 @@
 # antell-lunchmenu-flowdock
 Antell lunchmenu integration for Flowdock.
 
+![Screenshot](https://user-images.githubusercontent.com/21111572/27684153-5fb11bbc-5cd1-11e7-9c69-459d5ddcdf8f.png)
+
 ## Setting up the integration
 Setting up this integration requires:
 
