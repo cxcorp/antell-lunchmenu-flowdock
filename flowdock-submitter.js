@@ -47,9 +47,9 @@ function menuToFields(menu) {
 }
 
 function getMessageBody(fields) {
-  return fields.length > 0
-    ? `<span style="font-weight:bold">${fields[0].label}</span> and more ...`
-    : 'Nothing :('
+  if (fields.length === 0) return 'No info'
+  const andMore = fields.length > 1 ? ' and more...' : ''
+  return `<span style="font-weight:bold">${fields[0].label}</span>${andMore}`
 }
 
 function getThreadId() {
