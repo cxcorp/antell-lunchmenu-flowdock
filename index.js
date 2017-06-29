@@ -1,14 +1,19 @@
 require('dotenv').config()
 const fetch = require('node-fetch')
 const { antellMenuUrl, flowdockFlowToken, userAgent } = require('./config')
-const { getTodaysDateInFinnish } = require('./util')
+const { getTodaysWeekdayInFinnish } = require('./util')
 const { parseLunchMenu } = require('./lunch-menu-parser')
 const { submitToFlowdock } = require('./flowdock-submitter')
 
 exitIfMissingVars()
 
 getLunchMenu().then(weekMenu => {
-  const menu = getTodaysMenu(weekMenu)
+  const key = getTodaysWeekdayInFinnish()
+  if (key === 'Lauantai' || key === 'Sunnuntai') {
+    console.log('Weekend; not posting menu')
+    process.exit(0)
+  }
+  const menu = weekMenu[key]
   if (!menu) {
     console.error('Failed to get today\'s menu')
     process.exit(1)
@@ -36,9 +41,4 @@ function getLunchMenu() {
   return fetch(antellMenuUrl, { headers: { 'User-Agent': userAgent } })
     .then(body => body.text())
     .then(parseLunchMenu)
-}
-
-function getTodaysMenu(weekMenu) {
-  const key = getTodaysDateInFinnish()
-  return weekMenu[key]
 }

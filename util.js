@@ -1,13 +1,13 @@
-const weekdaysFinnish = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai']
-const weekdaysEnglish = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+const weekdaysFinnish = ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai']
+const weekdaysEnglish = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 /** @returns {string | undefined}
  */
-function getTodaysDateInFinnish() {
+function getTodaysWeekdayInFinnish() {
   return getTodaysDay(weekdaysFinnish)
 }
 
-function getTodaysDateInEnglish() {
+function getTodaysWeekdayInEnglish() {
   return getTodaysDay(weekdaysEnglish)
 }
 
@@ -16,4 +16,27 @@ function getTodaysDay(days) {
   return day < days.length ? days[day] : undefined
 }
 
-module.exports = { getTodaysDateInEnglish, getTodaysDateInFinnish }
+function formatDateRfc(date) {
+  const day = leftPad(`${date.getUTCDate()}`, '0', 2)
+  const month = leftPad(`${date.getUTCMonth() + 1}`, '0', 2)
+  const yr = date.getUTCFullYear()
+  return [yr, month, day].join('-')
+}
+
+function leftPad(s, c, n) {
+  // by InsOp - https://stackoverflow.com/a/36247412/996081
+  s = s.toString()
+  c = c.toString()
+  return s.length > n
+    ? s
+    : c.repeat(n - s.length) + s
+}
+
+
+module.exports = {
+  getTodaysWeekdayInEnglish,
+  getTodaysWeekdayInFinnish,
+  weekdaysEnglish,
+  weekdaysFinnish,
+  formatDateRfc
+}

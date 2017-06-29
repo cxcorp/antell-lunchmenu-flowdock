@@ -1,4 +1,5 @@
 const { JSDOM } = require('jsdom')
+const { weekdaysFinnish } = require('./util')
 
 function parseLunchMenu(html) {
   const { document } = new JSDOM(html).window
@@ -15,9 +16,10 @@ function groupByDay(arr) {
   )
 }
 
-const weekDaysMap = {
-  'Maanantai': true, 'Tiistai': true, 'Keskiviikko': true, 'Torstai': true, 'Perjantai': true
-}
+const weekDaysMap/*: { [day: string]: true }*/ = weekdaysFinnish.reduce(
+  (acc, day) => { acc[day] = true; return acc },
+  {}
+)
 
 /** Returns whether a content block is a container for a day's lunch menu
  * @param {HTMLElement} element

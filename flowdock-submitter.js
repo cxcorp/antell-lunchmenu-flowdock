@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const { userAgent, flowdockFlowToken, antellMenuUrl } = require('./config')
-const { getTodaysDateInEnglish } = require('./util')
+const { getTodaysWeekdayInEnglish, formatDateRfc } = require('./util')
 
 /**
  * @param {any} menu
@@ -15,7 +15,6 @@ function submitToFlowdock(menu) {
     title: `Today's lunch`,
     body,
     author: { name: 'Antell' },
-    // just generate some random ID so that the messages don't get grouped
     external_thread_id: getThreadId(),
     thread: {
       title: getThreadTitle(),
@@ -53,11 +52,12 @@ function getMessageBody(fields) {
 }
 
 function getThreadId() {
+  // just generate some random ID so that the messages don't get grouped
   return `${antellMenuUrl}?id=${new Date().getTime()}`
 }
 
 function getThreadTitle() {
-  return `${getTodaysDateInEnglish()}'s lunch menu (${new Date().toLocaleDateString()})`
+  return `${getTodaysWeekdayInEnglish()}'s lunch menu (${formatDateRfc(new Date())})`
 }
 
 module.exports = { submitToFlowdock }
