@@ -15,7 +15,7 @@ getLunchMenu().then(weekMenu => {
   }
   const menu = weekMenu[key]
   if (!menu) {
-    console.error('Failed to get today\'s menu')
+    console.error(`No lunch menu found for ${key}. Lunch menus found: ${Object.keys(weekMenu)}`)
     process.exit(1)
   }
 
