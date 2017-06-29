@@ -2,9 +2,9 @@
   "name": "antell-localhost-flowdock",
   "version": "1.0.4",
   "description": "Flowdock integration for the Antell lunch menu",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "lunchmenu": "node index.js",
+    "lunchmenu": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joona Heikkilä",
