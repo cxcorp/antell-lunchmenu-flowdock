@@ -12,8 +12,8 @@
   "private": true,
   "dependencies": {
     "bluebird": "3.5.0",
-    "dotenv": "4.0.0",
     "jsdom": "11.0.0",
-    "node-fetch": "1.7.1"
+    "node-fetch": "1.7.1",
+    "yargs": "8.0.2"
   }
 }

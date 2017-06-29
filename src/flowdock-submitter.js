@@ -1,39 +1,30 @@
-const Promise = require('bluebird')
 const fetch = require('node-fetch')
-const { userAgent, flowdockFlowTokens, antellMenuUrl } = require('./config')
+const { userAgent } = require('./config')
 const { getTodaysWeekdayInEnglish, formatDateRfc } = require('./util')
 
 /**
  * @param {any} menu
  * @returns {Promise<string>} flowdock server response
  */
-function submitMenuToFlowdock(menu) {
+function submitMenuToFlowdock(menu, argv) {
   const fields = menuToFields(menu)
   const body = getMessageBody(fields)
   const payload = {
-    //flow_token: flowdockFlowTokens, // injected below
+    flow_token: argv.flow,
     event: 'activity',
     title: `Today's lunch`,
     body,
     author: { name: 'Antell' },
-    external_thread_id: getThreadId(),
+    external_thread_id: getThreadId(argv.url),
     thread: {
       title: getThreadTitle(),
       fields: fields,
-      external_url: antellMenuUrl
+      external_url: argv.url
     },
-    tags: ['#lunch_menu']
+    tags: argv.tags
   }
 
-  return Promise.all(flowdockFlowTokens.map((token, i) => {
-    const payloadWithToken = Object.assign(
-      {},
-      payload,
-      { flow_token: token }
-    )
-    console.log(`Submitting lunch list to flow #${i}`)
-    return submitBodyToFlow(payloadWithToken)
-  }))
+  return submitBodyToFlow(payload)
 }
 
 function submitBodyToFlow(payload) {
@@ -66,7 +57,7 @@ function getMessageBody(fields) {
   return `<span style="font-weight:bold">${fields[0].label}</span>${andMore}`
 }
 
-function getThreadId() {
+function getThreadId(antellMenuUrl) {
   // just generate some random ID so that the messages don't get grouped
   return `${antellMenuUrl}?id=${new Date().getTime()}`
 }
